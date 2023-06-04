@@ -51,9 +51,6 @@ pub fn run(filename: &String) -> std::io::Result<()> {
                                 loop_count -= 1;
                             }
                         }
-                        else {
-
-                        }
                     }
                 }
             }
