@@ -2,11 +2,13 @@
 
 mod files;
 mod run;
+mod compile;
 
 use std::cmp::Ordering::*;
 use std::env;
 
 use run::run;
+use compile::compile;
 
 fn main() {
         let args: Vec<String> = env::args().collect();
@@ -23,11 +25,11 @@ fn main() {
         }
 
         let command = args[1].clone();
-        let file = args[2].clone();
+        let filename = args[2].clone();
 
         match command.as_str() {
-            "run" => run(&file).unwrap(),
-            "compile" => println!("Compiling"),
+            "run" => run(&filename).unwrap(),
+            "compile" => compile(&filename).unwrap(),
             _ => println!("Unknown command")
         };
 }

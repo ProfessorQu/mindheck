@@ -6,8 +6,8 @@ fn get_op(contents: &str, i: usize) -> Option<char> {
     contents.chars().nth(i)
 }
 
-pub fn run(file: &String) -> std::io::Result<()> {
-    let mut contents = load_file(file)?;
+pub fn run(filename: &String) -> std::io::Result<()> {
+    let mut contents = load_file(filename)?;
 
     contents = contents.split_whitespace().collect();
 
