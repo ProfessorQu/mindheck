@@ -8,24 +8,29 @@ use super::Info;
 
 pub fn compile_fn(filename: &String) -> std::io::Result<()> {
     let contents = load_file(filename)?;
-    let tokens: Vec<&str> = contents
-        .split(|c| c == '\n' || c == '(' || c == ')')
+
+    let tokens: Vec<&str> = contents.split(|c| c == '\n' || c == '\r').collect();
+    let tokens = tokens.join("");
+    let tokens = tokens
+        .split(|c| c == '(' || c == ')')
+        .filter(|x| !x.is_empty())
         .collect();
 
     let mut info = Info::new(tokens);
 
     while info.tokens_remaining() {
-        match info
-            .get_token(info.i)
-            .expect("Failed to get operator")
-            .as_str()
-        {
+        match info.get_token(info.i).expect("Failed to get operator").as_str() {
             "print" => print_fn(&mut info),
+            "input" => input_fn(&mut info),
             "move_to" => move_to_fn(&mut info),
             "add" => add_fn(&mut info),
             "sub" => sub_fn(&mut info),
             "mult" => mult_fn(&mut info),
-            x => info.add(x),
+            x => {
+                if !x.is_empty() {
+                    info.add(x)
+                }
+            }
         };
 
         info.inc_i();

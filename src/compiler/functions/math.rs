@@ -1,25 +1,25 @@
-use crate::compiler::{utils::*, Info};
+use crate::compiler::Info;
 
 pub fn add_fn(info: &mut Info) {
-    if let Some(num) = check_next_is_int(info) {
+    if let Some(num) = info.check_next_is_int() {
         info.add(&"+".repeat(num));
     }
 }
 
 pub fn sub_fn(info: &mut Info) {
-    if let Some(num) = check_next_is_int(info) {
+    if let Some(num) = info.check_next_is_int() {
         info.add(&"-".repeat(num));
     }
 }
 
 pub fn move_to_fn(info: &mut Info) {
-    if let Some(target) = check_next_is_int(info) {
-        move_pointer_to(info, target);
+    if let Some(target) = info.check_next_is_int() {
+        info.move_pointer_to(target);
     }
 }
 
 pub fn mult_fn(info: &mut Info) {
-    if let Some(nums) = check_next_are_ints(info) {
+    if let Some(nums) = info.check_next_are_ints() {
         if nums.len() != 2 {
             println!("Not the correct number of arguments!");
             return;
@@ -31,6 +31,6 @@ pub fn mult_fn(info: &mut Info) {
         info.add(&"+".repeat(var1));
         info.add("\n[>");
         info.add(&"+".repeat(var2));
-        info.add("<-]");
+        info.add("<-]\n");
     }
 }

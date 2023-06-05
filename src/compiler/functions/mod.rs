@@ -1,6 +1,5 @@
 mod math;
-mod print_fn;
-
-pub use print_fn::print_fn;
+mod console;
 
 pub use math::*;
+pub use console::*;

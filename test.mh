@@ -1,5 +1,10 @@
 mult(3, 4)
 add(48)
-print()
+
 move_to(30)
+input("Input number: ")
+add(48)
+print(30)
+
+move_to(40)
 print("Hello World!")
