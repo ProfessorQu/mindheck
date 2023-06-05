@@ -1,24 +1,21 @@
-pub fn get_token(operators: &[&str], i: usize) -> Option<String> {
-    operators.get(i).map(|operator| operator.to_string())
-}
+use super::Info;
 
-pub fn move_pointer_to(result: &mut String, pointer: &mut usize, target: usize) {
-    let movement = target as i32 - *pointer as i32;
+pub fn move_pointer_to(info: &mut Info, target: usize) {
+    let movement = target as i32 - info.pointer as i32;
 
     if movement > 0 {
-        *result += &">".repeat(movement as usize);
-        *pointer += movement as usize;
+        info.add(&">".repeat(movement as usize));
+        info.move_pointer(movement as usize);
     } else {
-        *result += &"<".repeat(-movement as usize);
-        *pointer += -movement as usize;
+        info.add(&"<".repeat(-movement as usize));
+        info.move_pointer(-movement as usize);
     }
 }
 
-pub fn check_next_is_int(tokens: &[&str], i: &mut usize) -> Option<usize> {
-    if let Some(token) = get_token(tokens, *i + 1) {
+pub fn check_next_is_int(info: &mut Info) -> Option<usize> {
+    if let Some(token) = info.get_token(info.i + 1) {
         if let Ok(target) = token.parse::<usize>() {
-            *i += 1;
-
+            info.inc_i();
             return Some(target);
         }
     }
@@ -26,9 +23,9 @@ pub fn check_next_is_int(tokens: &[&str], i: &mut usize) -> Option<usize> {
     None
 }
 
-pub fn check_next_are_ints(tokens: &[&str], i: &mut usize) -> Option<Vec<usize>> {
+pub fn check_next_are_ints(info: &mut Info) -> Option<Vec<usize>> {
     let mut ints = vec![];
-    if let Some(token) = get_token(tokens, *i + 1) {
+    if let Some(token) = info.get_token(info.i + 1) {
         let token = token.split_whitespace().collect::<Vec<&str>>().join("");
 
         for num in token.split(',') {
@@ -41,7 +38,7 @@ pub fn check_next_are_ints(tokens: &[&str], i: &mut usize) -> Option<Vec<usize>>
     }
 
     if !ints.is_empty() {
-        *i += 1;
+        info.inc_i();
 
         Some(ints)
     } else {

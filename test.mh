@@ -1,2 +1,5 @@
 mult(3, 4)
+add(48)
+print()
+move_to(30)
 print("Hello World!")
