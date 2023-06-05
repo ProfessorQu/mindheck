@@ -11,6 +11,8 @@ pub fn compile_fn(filename: &String) -> std::io::Result<()> {
         .split(|c| c == '\n' || c == '(' || c == ')')
         .collect();
 
+    let mut pointer = 0;
+
     let mut result = String::new();
 
     let mut i = 0;
@@ -19,10 +21,11 @@ pub fn compile_fn(filename: &String) -> std::io::Result<()> {
             .expect("Failed to get operator")
             .as_str()
         {
-            "print" => print_fn(&tokens, &mut result, &mut i),
-            "move" => move_fn(&tokens, &mut result, &mut i),
+            "print" => print_fn(&tokens, &mut result, &mut pointer, &mut i),
+            "move_to" => move_to_fn(&tokens, &mut result, &mut pointer, &mut i),
             "add" => add_fn(&tokens, &mut result, &mut i),
             "sub" => sub_fn(&tokens, &mut result, &mut i),
+            "mult" => mult_fn(&tokens, &mut result, &mut i),
             x => result += x,
         };
 

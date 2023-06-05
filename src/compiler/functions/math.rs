@@ -12,8 +12,25 @@ pub fn sub_fn(tokens: &[&str], result: &mut String, i: &mut usize) {
     }
 }
 
-pub fn move_fn(tokens: &[&str], result: &mut String, i: &mut usize) {
+pub fn move_to_fn(tokens: &[&str], result: &mut String, pointer: &mut usize, i: &mut usize) {
     if let Some(target) = check_next_is_int(tokens, i) {
-        move_pointer(result, target);
+        move_pointer_to(result, pointer, target);
+    }
+}
+
+pub fn mult_fn(tokens: &[&str], result: &mut String, i: &mut usize) {
+    if let Some(nums) = check_next_are_ints(tokens, i) {
+        if nums.len() != 2 {
+            println!("Not the correct number of arguments!");
+            return;
+        }
+
+        let var1 = nums[0];
+        let var2 = nums[1];
+
+        *result += &"+".repeat(var1);
+        *result += "\n[>";
+        *result += &"+".repeat(var2);
+        *result += "<-]";
     }
 }

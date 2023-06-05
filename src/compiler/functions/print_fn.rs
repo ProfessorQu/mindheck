@@ -1,6 +1,6 @@
 use crate::compiler::utils::*;
 
-pub fn print_fn(tokens: &[&str], result: &mut String, i: &mut usize) {
+pub fn print_fn(tokens: &[&str], result: &mut String, pointer: &mut usize, i: &mut usize) {
     if let Some(token) = get_token(tokens, *i + 1) {
         if token.starts_with('"') && token.ends_with('"') {
             let string = token[1..token.len() - 1].to_owned();
@@ -24,10 +24,9 @@ pub fn print_fn(tokens: &[&str], result: &mut String, i: &mut usize) {
             *result += ">";
             *i += 1;
         } else if let Ok(target) = token.parse::<usize>() {
-            let pointer = calc_pointer(result);
-            move_pointer(result, target);
+            move_pointer_to(result, pointer, target);
             *result += ".";
-            move_pointer(result, pointer);
+            move_pointer_to(result, pointer, target);
 
             *i += 1;
         }
