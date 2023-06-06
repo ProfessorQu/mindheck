@@ -3,12 +3,25 @@ use crate::compiler::Info;
 pub fn add_fn(info: &mut Info) {
     if let Some(num) = info.check_next_is_int() {
         info.add(&"+".repeat(num));
+    } else if let Some(target) = info.get_tape_target() {
+        let cur = info.pointer;
+        info.move_pointer_to(target);
+
+        info.add("[-");
+        info.move_pointer_to(cur);
+
+        info.add("+");
+        info.move_pointer_to(target);
+
+        info.add("]");
+
+        info.inc_i();
     }
 }
 
 pub fn sub_fn(info: &mut Info) {
     if let Some(num) = info.check_next_is_int() {
-        info.add(&"-".repeat(num));
+        info.add("-".repeat(num).as_str());
     }
 }
 
@@ -29,8 +42,8 @@ pub fn mult_fn(info: &mut Info) {
         let var2 = nums[1];
 
         info.add(&"+".repeat(var1));
-        info.add("\n[>");
+        info.add("[>");
         info.add(&"+".repeat(var2));
-        info.add("<-]\n");
+        info.add("<-]");
     }
 }

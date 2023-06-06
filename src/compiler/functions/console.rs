@@ -1,4 +1,4 @@
-use crate::compiler::Info;
+use crate::{compiler::Info };
 
 fn print_string(token: String, info: &mut Info) {
     let string = token[1..token.len() - 1].to_owned();
@@ -15,7 +15,7 @@ fn print_string(token: String, info: &mut Info) {
             info.add(&"-".repeat(minuses));
         }
 
-        info.add(".\n");
+        info.add(".");
         prev = cur;
     }
 
@@ -29,36 +29,35 @@ fn print_newline(info: &mut Info) {
     info.add(">");
     let pluses: usize = ('\n' as u32).try_into().unwrap();
     info.add(&"+".repeat(pluses));
-    
-    info.add(".\n");
+
+    info.add(".");
 }
 
 pub fn print_fn(info: &mut Info) {
-    if let Some(token) = info.get_token(info.i + 1) {
+    if let Some(token) = info.get_next_token() {
         if token.starts_with('"') && token.ends_with('"') {
             print_string(token, info);
-        } else if let Ok(target) = token.parse::<usize>() {
+        } else if let Some(target) = info.get_tape_target() {
             info.move_pointer_to(target);
             info.add(".");
-            info.move_pointer_to(target);
 
             print_newline(info);
 
             info.inc_i();
         } else {
-            info.add(".\n");
+            info.add(".");
         }
     } else {
-        info.add(".\n");
+        info.add(".");
     }
 }
 
 pub fn input_fn(info: &mut Info) {
-    if let Some(token) = info.get_token(info.i + 1) {
+    if let Some(token) = info.get_next_token() {
         if token.starts_with('"') && token.ends_with('"') {
             print_string(token, info);
 
-            info.add(",\n");
+            info.add(",");
         }
     }
 }

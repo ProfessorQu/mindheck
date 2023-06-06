@@ -35,7 +35,7 @@ pub fn run(filename: &String) -> std::io::Result<()> {
                 while input.is_empty() {
                     stdin.read_line(&mut input)?;
                 }
-                tape[pointer] = input.chars().next().unwrap() as u32 - '0' as u32;
+                tape[pointer] = input.chars().next().unwrap() as u32;
                 input.clear();
             }
             '[' => {

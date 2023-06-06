@@ -10,6 +10,8 @@ use std::env;
 use compiler::compile_fn;
 use run::run;
 
+static TAPE_PREFIX: char = 't';
+
 fn main() {
     let args: Vec<String> = env::args().collect();
     match args.len().cmp(&3) {

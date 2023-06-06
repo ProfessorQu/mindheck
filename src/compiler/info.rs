@@ -1,3 +1,5 @@
+use crate::TAPE_PREFIX;
+
 pub struct Info {
     tokens: Vec<String>,
     result: String,
@@ -25,8 +27,6 @@ impl Info {
             self.add(&"<".repeat(-movement as usize));
             self.move_pointer(-movement as usize);
         }
-
-        self.add("\n");
     }
 
     pub fn check_next_is_int(&mut self) -> Option<usize> {
@@ -72,8 +72,25 @@ impl Info {
         self.tokens.get(index).cloned()
     }
 
+    pub fn get_next_token(&self) -> Option<String> {
+        self.get_token(self.i + 1)
+    }
+
+    pub fn get_tape_target(&self) -> Option<usize> {
+        if let Some(token) = self.get_next_token() {
+            if let Some(token) = token.strip_prefix(TAPE_PREFIX) {
+                if let Ok(target) = token.parse::<usize>() {
+                    return Some(target);
+                }
+            }
+        }
+
+        None
+    }
+
     pub fn add(&mut self, code: &str) {
         self.result += code;
+        self.result += "\n";
     }
 
     pub fn move_pointer(&mut self, movement: usize) {
