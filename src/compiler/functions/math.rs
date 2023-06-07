@@ -15,6 +15,8 @@ pub fn add_fn(info: &mut Info) {
 
         info.add("]");
 
+        info.move_pointer_to(cur);
+
         info.inc_i();
     }
 }

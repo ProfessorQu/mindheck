@@ -1,15 +1,13 @@
 print("Add two numbers")
 input("Input number: ")
-print(t0)
 sub(48)
 
 move_to(10)
 input("Input number: ")
-print(t10)
 sub(48)
 
-move_to(20)
-add(t0)
+move_to(0)
 add(t10)
+add(48)
 
-print(t20)
+print(t0)

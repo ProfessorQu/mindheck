@@ -19,7 +19,12 @@ pub fn compile_fn(filename: &String) -> std::io::Result<()> {
     let mut info = Info::new(tokens);
 
     while info.tokens_remaining() {
-        match info.get_token(info.i).expect("Failed to get operator").as_str() {
+        let token = info.get_token(info.i).expect("Failed to get operator");
+        let token = token.as_str();
+
+        info.add(token);
+
+        match token {
             "print" => print_fn(&mut info),
             "input" => input_fn(&mut info),
             "move_to" => move_to_fn(&mut info),
