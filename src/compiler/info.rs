@@ -22,10 +22,10 @@ impl Info {
 
         if movement > 0 {
             self.add(&">".repeat(movement as usize));
-            self.move_pointer(movement as usize);
+            self.move_pointer(movement);
         } else {
             self.add(&"<".repeat(-movement as usize));
-            self.move_pointer(-movement as usize);
+            self.move_pointer(movement);
         }
     }
 
@@ -93,8 +93,8 @@ impl Info {
         self.result += "\n";
     }
 
-    pub fn move_pointer(&mut self, movement: usize) {
-        self.pointer += movement;
+    pub fn move_pointer(&mut self, movement: i32) {
+        self.pointer = (self.pointer as i32 + movement) as usize;
     }
 
     pub fn inc_i(&mut self) {

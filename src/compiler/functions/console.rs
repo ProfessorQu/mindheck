@@ -1,4 +1,4 @@
-use crate::{compiler::Info };
+use crate::compiler::Info;
 
 fn print_string(token: String, info: &mut Info) {
     let string = token[1..token.len() - 1].to_owned();
@@ -21,12 +21,12 @@ fn print_string(token: String, info: &mut Info) {
 
     print_newline(info);
 
-    info.add(">");
+    info.add("[-]");
     info.inc_i();
 }
 
 fn print_newline(info: &mut Info) {
-    info.add(">");
+    info.add("[-]");
     let pluses: usize = ('\n' as u32).try_into().unwrap();
     info.add(&"+".repeat(pluses));
 
